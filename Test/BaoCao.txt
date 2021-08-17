@@ -1,0 +1,25 @@
+﻿***** Bài báo cáo C# cơ bản
+-- Tham trị: khi ta truyền biến vào hàm dười dạng tham trị, chương trình sẽ tạo ra một biến mới và mang gia trị của tham trị ta truyền vào và thao tác trên biến mới đó
+-- Tham chiếu: khi ta truyền biến vào hàm dười dạng tham chiếu, chương trình sẽ thao tác trên chính tham chiếu ta truyền vào(tức là khi ta thay đổi giá trị của tham chiếu trong hàm, khi hàm kết thúc tham chiếu đó sẽ thay đổi giá trị )
+-- Từ khóa 'ref':  từ khóa ref cho phép ta truyền biến dưới dạng tham chiếu vào hàm, yêu cầu biến đã được rán giá trị trước đó.	
+		VD:
+		public void tong(ref int n)
+		{n++;}
+		static void main()
+		{
+			int n=0;
+			tong(ref n);
+		}
+		*khi chương trình thực hiện xong n sẽ có giá trị là 1
+-- Từ khóa 'out': từ khóa out cho phép ta truyền biến dưới dạng tham chiếu vào hàm, nhưng không yêu cầu biến đã có gia trị trước đó và phải rán giá trị cho tham chiếu truyền vào khi sử dụng.
+		VD:
+		public void tong(out int n)
+		{
+			n = 0;
+			n++;}
+		static void main()
+		{
+			int n;
+			tong(out n);
+		}
+		*khi chương trình thực hiện xong n sẽ có giá trị là 1
