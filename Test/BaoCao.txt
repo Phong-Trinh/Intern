@@ -7,7 +7,7 @@
 		{n++;}
 		static void main()
 		{
-			int n=0;
+			int n=0;    
 			tong(ref n);
 		}
 		*khi chương trình thực hiện xong n sẽ có giá trị là 1
