@@ -32,18 +32,18 @@ namespace ConsoleApp2
                     }
                 case '2':
                     {
-                        int i = 1;
-                        while (i <= numFibo)
+                        int[] fiboArr = new int[numFibo];
+                        fiboArr[0] = 1;
+                        if (numFibo >= 2)
                         {
-                            if (i == 2 || i == 1) fibo = 1;
-                            else
+                            fiboArr[1] = 1;
+                            if(numFibo > 2)
+                            for (int i = 2; i < numFibo; i++)
                             {
-                                int temporary1 = fibo;
-                                fibo += temporary;
-                                temporary = temporary1;
+                                    fiboArr[i] = fiboArr[i - 1] + fiboArr[i - 2];
                             }
-                            i++;
                         }
+                        fibo = fiboArr[numFibo - 1];
                         break;
                     }
                 case '3':
@@ -60,7 +60,7 @@ namespace ConsoleApp2
             char waySolve;
             while (true)
             {
-                Console.WriteLine("FIBONACCI PROGAM~~");
+                Console.WriteLine("FIBONACCI PROGRAM~~");
                 Console.Write("Enter number of fibonacci number: ");
                 while (true)
                 {
@@ -75,7 +75,7 @@ namespace ConsoleApp2
                         Console.Write("Invalid number,   try enter your number again: ");
                     }
                 }
-                Console.Write("Choose the way to solve('1','2','3')~~");
+                Console.Write("Choose the way to solve('1','2','3'):  ");
                 while (true)
                 {
                     if (Char.TryParse(Console.ReadLine(), out waySolve) == true)
@@ -90,11 +90,11 @@ namespace ConsoleApp2
                         Console.WriteLine("Please try again: ");
                 }
                 Console.Clear();
-                Console.WriteLine("You choose way" + waySolve + "and your result is: ");
+                Console.Write("You choose way" + waySolve + " and your result is: ");
                 figureOut(numFibo, waySolve);
-                Console.Write("doyou want to try it again? Press 'n' to do it");
-                char n = char.Parse(Console.ReadLine());
-                if (n == 'n')
+                Console.Write("Do you want to try it again? Press 'n' to do it");
+                ConsoleKeyInfo restart= Console.ReadKey();
+                if (restart.KeyChar == 'n')
                 {
                     numFibo = -1;
                     waySolve = 'P';
@@ -102,6 +102,8 @@ namespace ConsoleApp2
                 }
                 else
                 {
+                    Console.WriteLine("\nEnd you program");
+                    Console.ReadKey();
                     break;
                 }
             }
