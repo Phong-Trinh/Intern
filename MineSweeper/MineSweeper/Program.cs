@@ -6,21 +6,12 @@ namespace MineSweeper
     {
         static char importOption()
         {
-            char op;
+            ConsoleKeyInfo option;
             while (true)
             {
-                if (Char.TryParse(Console.ReadLine(), out op) == true)
-                {
-                    if ((op != '1') && (op != '0') && (op != '2'))
-                    {
-                        Console.WriteLine("Please try again: ");
-                    }
-                    else break;
-                }
-                else
-                    Console.WriteLine("Please try again: ");
+                option = Console.ReadKey();
+                if (option.KeyChar == '1' || option.KeyChar == '0') return option.KeyChar;
             }
-            return op;
         }
         static void initializeBoom(int[] boomX, int[] boomY, int boomNum, int[,] mineMatrix, int[,] statusMatrix)
         {
@@ -56,23 +47,26 @@ namespace MineSweeper
         static void consolePrint(int boomNum, int[,] mineMatrix, int[,] statusMatrix)
         {
             Console.Clear();
-            Console.WriteLine("\n\n\t\t----------------");
-            Console.WriteLine("  0 1 2 3 4 5 6 7 8");
+            Console.WriteLine("\n\n\t\t----------------MINESWEEPER--------------");
+            Console.WriteLine("  \t\t\t0  1  2  3  4  5  6  7  8");
             for(int i=0;i<9;i++)
             {
-                Console.Write("\n"+i+" ");
+                Console.Write("\n\t\t"+i+"\t");
                 for (int j = 0; j < 9; j++)
                 {
-                    if (statusMatrix[i, j] == 0) Console.Write("I ");
-                    else if(statusMatrix[i, j] == 4) Console.Write("F ");
+                    if (statusMatrix[i, j] == 0) Console.Write("I  ");
+                    else if(statusMatrix[i, j] == 4) Console.Write("F  ");
                     else if (statusMatrix[i, j] == 2) 
-                        if (mineMatrix[i,j] == 9) Console.Write("X ");
-                        else if (mineMatrix[i, j] == 0) Console.Write("- ");
-                        else Console.Write(mineMatrix[i, j]+" ");
+                        if (mineMatrix[i,j] == 9) Console.Write("X  ");
+                        else if (mineMatrix[i, j] == 0) Console.Write("-  ");
+                        else Console.Write(mineMatrix[i, j]+"  ");
                 }
+                if (i == 1) Console.Write("\t\tBoom Number:   " + boomNum);
+                if (i == 2) Console.Write("\t\t 'o': to open the box");
+                if (i == 3) Console.Write("\t\t 'f': to take a flag  ");
+                if (i == 4) Console.Write("\t\t 'e': exit");
             }
-            Console.Write("\nBoom Number:   " + boomNum + "\t\t 'o': to open the box");
-            Console.WriteLine("\n'f': to take a flag  " + "\t\t 'e': exit");
+            Console.WriteLine("\n\n\t\t----------------~~~~~~~~~~---------------");
             Console.Write("Please choose one function:   ");
         }
         static void openBox(int row, int col, int[,] mineMatrix, int[,] statusMatrix, ref int openedBox)
@@ -136,28 +130,28 @@ namespace MineSweeper
                     }
                     else if(action.KeyChar == 'o')
                     {                   
-                        Console.WriteLine("Please enter row you want to open: ");
+                        Console.Write("Please enter row you want to open: ");
                         while (true)
                         {
-                            if (int.TryParse(Console.ReadLine(), out row) == true && row < 9)
+                            if (int.TryParse(Console.ReadLine(), out row) == true && row < 9 && row >= 0)
                             {
                                 break;
                             }
                             else
                             {
-                                Console.WriteLine("try again: ");
+                                Console.Write("Try again: ");
                             }
                         }
-                        Console.WriteLine("Please enter colum you want to open: ");
+                        Console.Write("Please enter colum you want to open: ");
                         while (true)
                         {
-                            if (int.TryParse(Console.ReadLine(), out col) == true && col < 9)
+                            if (int.TryParse(Console.ReadLine(), out col) == true && col < 9 && col >= 0)
                             {
                                 break;
                             }
                             else
                             {
-                                Console.WriteLine("try again: ");
+                                Console.Write("Try again: ");
                             }
                         }
                         if (statusMatrix[row, col] == 2 || statusMatrix[row, col] == 4) { Console.WriteLine("This box's already opened or flaged!"); Console.ReadKey(); }
@@ -167,7 +161,7 @@ namespace MineSweeper
                             consolePrint(boomNum, mineMatrix, statusMatrix);
                             isOver = true;
                             openedBox++;
-                            Console.WriteLine("\n YOu lose      Total opened boxes:" + openedBox);
+                            Console.WriteLine("\n You lose      Total opened boxes:" + openedBox);
                             Console.ReadKey();
                             //break;
                         }
@@ -176,28 +170,28 @@ namespace MineSweeper
                     }
                     else if (action.KeyChar == 'f')
                     {
-                        Console.WriteLine("Please enter row you want to take flag: ");
+                        Console.Write("Please enter row you want to take flag: ");
                         while (true)
                         {
-                            if (int.TryParse(Console.ReadLine(), out row) == true && row < 9)
+                            if (int.TryParse(Console.ReadLine(), out row) == true && row < 9 && row >=0)
                             {
                                 break;
                             }
                             else
                             {
-                                Console.WriteLine("try again: ");
+                                Console.Write("Try again: ");
                             }
                         }
-                        Console.WriteLine("Please enter colum you want to take flag: ");
+                        Console.Write("Please enter colum you want to take flag: ");
                         while (true)
                         {
-                            if (int.TryParse(Console.ReadLine(), out col) == true && col < 9)
+                            if (int.TryParse(Console.ReadLine(), out col) == true && col < 9 && col >= 0)
                             {
                                 break;
                             }
                             else
                             {
-                                Console.WriteLine("try again: ");
+                                Console.Write("Try again: ");
                             }
                         }
                         if (statusMatrix[row, col] == 4) statusMatrix[row, col] = 0;
