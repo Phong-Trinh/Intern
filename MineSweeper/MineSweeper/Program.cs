@@ -31,16 +31,17 @@ namespace MineSweeper
                 {
                     mineMatrix[boomX[i], boomY[i]] = 9;
                     i++;
-                 }
+                }
                 else
                 for(int j=0;  j<i;j++)
                 {
                         if ((boomX[i] == boomX[j]) && (boomY[i] == boomY[j])) break;
-                        else {
+                        else 
+                        {
                             mineMatrix[boomX[i], boomY[i]] = 9;
                             i++;
                             break;
-                        };
+                        }
                 }
             }
         }
@@ -76,12 +77,8 @@ namespace MineSweeper
             // Check is this the number box?
             for (int i = -1; i <= 1; i++)
                 for (int j = -1; j <= 1; j++)
-                {
                    if((i != 0 || j != 0) && row +i>-1 && col+j>-1 && row+i<9 && col+j<9)
-                    {
                         if (mineMatrix[row + i, col + j] == 9) count++;
-                    }
-                }
             if (count == 0)
             {
                 statusMatrix[row, col] = 2;
@@ -98,7 +95,8 @@ namespace MineSweeper
             {
                 statusMatrix[row, col] = 2;
                 openedBox++;
-                mineMatrix[row, col] = count; }
+                mineMatrix[row, col] = count;
+            }
         }
         static void playingGame()
         {
@@ -116,7 +114,6 @@ namespace MineSweeper
             initializeBoom(boomX, boomY, boomNum, mineMatrix, statusMatrix);
             while (!isOver)
             {
-                
                 consolePrint(boomNum, mineMatrix, statusMatrix);
                 while (true)
                 {
@@ -134,25 +131,17 @@ namespace MineSweeper
                         while (true)
                         {
                             if (int.TryParse(Console.ReadLine(), out row) == true && row < 9 && row >= 0)
-                            {
                                 break;
-                            }
                             else
-                            {
                                 Console.Write("Try again: ");
-                            }
                         }
                         Console.Write("Please enter colum you want to open: ");
                         while (true)
                         {
                             if (int.TryParse(Console.ReadLine(), out col) == true && col < 9 && col >= 0)
-                            {
                                 break;
-                            }
                             else
-                            {
                                 Console.Write("Try again: ");
-                            }
                         }
                         if (statusMatrix[row, col] == 2 || statusMatrix[row, col] == 4) { Console.WriteLine("This box's already opened or flaged!"); Console.ReadKey(); }
                         else if (mineMatrix[row, col] == 9)
@@ -163,9 +152,14 @@ namespace MineSweeper
                             openedBox++;
                             Console.WriteLine("\n You lose      Total opened boxes:" + openedBox);
                             Console.ReadKey();
-                            //break;
                         }
-                        else openBox(row, col, mineMatrix, statusMatrix,ref openedBox);
+                        else openBox(row, col, mineMatrix, statusMatrix, ref openedBox);
+                        if(openedBox == 9*9)
+                        {
+                            isOver = true;
+                            Console.WriteLine("\n WIN!      Total opened boxes:" + openedBox);
+                            Console.ReadKey();
+                        }
                         break;
                     }
                     else if (action.KeyChar == 'f')
@@ -174,25 +168,17 @@ namespace MineSweeper
                         while (true)
                         {
                             if (int.TryParse(Console.ReadLine(), out row) == true && row < 9 && row >=0)
-                            {
                                 break;
-                            }
                             else
-                            {
                                 Console.Write("Try again: ");
-                            }
                         }
                         Console.Write("Please enter colum you want to take flag: ");
                         while (true)
                         {
                             if (int.TryParse(Console.ReadLine(), out col) == true && col < 9 && col >= 0)
-                            {
                                 break;
-                            }
                             else
-                            {
                                 Console.Write("Try again: ");
-                            }
                         }
                         if (statusMatrix[row, col] == 4) statusMatrix[row, col] = 0;
                         else if (statusMatrix[row, col] == 0) statusMatrix[row, col] = 4;
@@ -226,8 +212,6 @@ namespace MineSweeper
                             break;
                         }
                 }
-
-
                 }    
         }
     }
