@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 namespace Linq
 {
-   public static class linq
+   public static class inq
     {
         public static IEnumerable<T> myOfType<T>(this IEnumerable list)
         {

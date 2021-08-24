@@ -1,5 +1,5 @@
 ﻿using System;
-
+using System.Threading;
 namespace MineSweeper
 {
     class Program
@@ -45,30 +45,60 @@ namespace MineSweeper
                 }
             }
         }
-        static void consolePrint(int boomNum, int[,] mineMatrix, int[,] statusMatrix)
+        static void consolePrint(int boomNum, int[,] mineMatrix, int[,] statusMatrix, int openX, int openY)
         {
             Console.Clear();
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.BackgroundColor = ConsoleColor.Black;
             Console.WriteLine("\n\n\t\t----------------MINESWEEPER--------------");
-            Console.WriteLine("  \t\t\t0  1  2  3  4  5  6  7  8");
+            Console.WriteLine("  \t\t\t 0  1  2  3  4  5  6  7  8");
             for(int i=0;i<9;i++)
             {
                 Console.Write("\n\t\t"+i+"\t");
                 for (int j = 0; j < 9; j++)
                 {
-                    if (statusMatrix[i, j] == 0) Console.Write("I  ");
-                    else if(statusMatrix[i, j] == 4) Console.Write("F  ");
-                    else if (statusMatrix[i, j] == 2) 
-                        if (mineMatrix[i,j] == 9) Console.Write("X  ");
-                        else if (mineMatrix[i, j] == 0) Console.Write("-  ");
-                        else Console.Write(mineMatrix[i, j]+"  ");
+                    if(i == openX && j == openY)
+                    {
+                        Console.BackgroundColor = ConsoleColor.Green;
+                    }
+                    else 
+                    { Console.BackgroundColor = ConsoleColor.Black; }
+                    if (statusMatrix[i, j] == 0)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Blue;
+                        Console.Write(" I ", Console.BackgroundColor);
+                        Console.ForegroundColor = ConsoleColor.White;
+                    }
+                    else if (statusMatrix[i, j] == 4)
+                    {
+                        Console.ForegroundColor = ConsoleColor.DarkYellow;
+                        Console.Write(" F ", Console.BackgroundColor, Console.ForegroundColor);
+                        Console.ForegroundColor = ConsoleColor.White;
+                    }
+                    else if (statusMatrix[i, j] == 2)
+                        if (mineMatrix[i, j] == 9)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.Write(" X ", Console.BackgroundColor);
+                            Console.ForegroundColor = ConsoleColor.White;
+                        }
+                        else if (mineMatrix[i, j] == 0) Console.Write(" - ", Console.BackgroundColor);
+                        else Console.Write(" " + mineMatrix[i, j] + " ", Console.BackgroundColor);
+                    if (i == openX && j == openY)
+                    {
+                        Console.BackgroundColor = ConsoleColor.Black;
+                    }
                 }
                 if (i == 1) Console.Write("\t\tBoom Number:   " + boomNum);
                 if (i == 2) Console.Write("\t\t 'o': to open the box");
                 if (i == 3) Console.Write("\t\t 'f': to take a flag  ");
-                if (i == 4) Console.Write("\t\t 'e': exit");
+                if (i == 4) Console.Write("\t\t 'w','a','s','d': to move");
+                if (i == 5) Console.Write("\t\t 'e': exit");
             }
+            Console.BackgroundColor = ConsoleColor.Black;
             Console.WriteLine("\n\n\t\t----------------~~~~~~~~~~---------------");
             Console.Write("Please choose one function:   ");
+            Thread.Sleep(0);
         }
         static void openBox(int row, int col, int[,] mineMatrix, int[,] statusMatrix, ref int openedBox)
         {
@@ -85,7 +115,7 @@ namespace MineSweeper
                 openedBox++;
                 for (int i = -1; i <= 1; i++)
                     for (int j = -1; j <= 1; j++)
-                        if (((i == 0 && j != 0)||(i != 0 && j ==0)) && row + i > -1 && col + j > -1 && row + i < 9 && col + j < 9)
+                        if ((i != 0 || j != 0) && row + i > -1 && col + j > -1 && row + i < 9 && col + j < 9)
                         {
                             if (statusMatrix[row + i, col + j] == 0)
                             openBox(row + i, col + j, mineMatrix, statusMatrix, ref openedBox);
@@ -107,14 +137,14 @@ namespace MineSweeper
             int[] boomX = new int[10];
             int[] boomY = new int[10];
             int boomNum = 10;
-            int row, col;
             int openedBox = 0;
             bool isOver = false;
+            int openX = 0, openY =0;
             ConsoleKeyInfo action;
             initializeBoom(boomX, boomY, boomNum, mineMatrix, statusMatrix);
             while (!isOver)
             {
-                consolePrint(boomNum, mineMatrix, statusMatrix);
+                consolePrint(boomNum, mineMatrix, statusMatrix, openX, openY);
                 while (true)
                 {
                     action = Console.ReadKey();
@@ -125,63 +155,60 @@ namespace MineSweeper
                         isOver = true;
                         break;
                     }
+                    else if (action.KeyChar == 'a')
+                    {
+                        openY--;
+                        if (openY == -1) openY = 8;
+                        break;
+                    }
+                    else if (action.KeyChar == 'w')
+                    {
+                        openX--;
+                        if (openX == -1) openX = 8;
+                        break;
+                    }
+                    else if (action.KeyChar == 's')
+                    {
+                        openX++;
+                        if (openX == 9) openX = 0;
+                        break;
+                    }
+                    else if (action.KeyChar == 'd')
+                    {
+                        openY++;
+                        if (openY == 9) openY = 0;
+                        break;
+                    }
                     else if(action.KeyChar == 'o')
-                    {                   
-                        Console.Write("Please enter row you want to open: ");
-                        while (true)
+                    {
+                        if (statusMatrix[openX, openY] == 2 || statusMatrix[openX, openY] == 4) { Console.WriteLine("This box's already opened or flaged!"); Console.ReadKey(); }
+                        else if (mineMatrix[openX, openY] == 9)
                         {
-                            if (int.TryParse(Console.ReadLine(), out row) == true && row < 9 && row >= 0)
-                                break;
-                            else
-                                Console.Write("Try again: ");
-                        }
-                        Console.Write("Please enter colum you want to open: ");
-                        while (true)
-                        {
-                            if (int.TryParse(Console.ReadLine(), out col) == true && col < 9 && col >= 0)
-                                break;
-                            else
-                                Console.Write("Try again: ");
-                        }
-                        if (statusMatrix[row, col] == 2 || statusMatrix[row, col] == 4) { Console.WriteLine("This box's already opened or flaged!"); Console.ReadKey(); }
-                        else if (mineMatrix[row, col] == 9)
-                        {
-                            for (int i = 0; i < boomNum; i++) { statusMatrix[boomX[i], boomY[i]] = 2; mineMatrix[row, col] = 9; }
-                            consolePrint(boomNum, mineMatrix, statusMatrix);
+                            for (int i = 0; i < boomNum; i++) { statusMatrix[boomX[i], boomY[i]] = 2; mineMatrix[boomX[i], boomY[i]] = 9; }
+                            consolePrint(boomNum, mineMatrix, statusMatrix, openX, openY);
                             isOver = true;
                             openedBox++;
                             Console.WriteLine("\n You lose      Total opened boxes:" + openedBox);
                             Console.ReadKey();
                         }
-                        else openBox(row, col, mineMatrix, statusMatrix, ref openedBox);
-                        if(openedBox == 9*9)
+                        else
                         {
-                            isOver = true;
-                            Console.WriteLine("\n WIN!      Total opened boxes:" + openedBox);
-                            Console.ReadKey();
+                            openBox(openX, openY, mineMatrix, statusMatrix, ref openedBox);
+                            if (openedBox == 71)
+                            {
+                                isOver = true;
+                                for (int i = 0; i < boomNum; i++) { statusMatrix[boomX[i], boomY[i]] = 2; mineMatrix[boomX[i], boomY[i]] = 9; }
+                                consolePrint(boomNum, mineMatrix, statusMatrix, openX, openY);
+                                Console.WriteLine("\n WIN!      Total opened boxes:" + "71");
+                                Console.ReadKey();
+                            }
                         }
                         break;
                     }
                     else if (action.KeyChar == 'f')
                     {
-                        Console.Write("Please enter row you want to take flag: ");
-                        while (true)
-                        {
-                            if (int.TryParse(Console.ReadLine(), out row) == true && row < 9 && row >=0)
-                                break;
-                            else
-                                Console.Write("Try again: ");
-                        }
-                        Console.Write("Please enter colum you want to take flag: ");
-                        while (true)
-                        {
-                            if (int.TryParse(Console.ReadLine(), out col) == true && col < 9 && col >= 0)
-                                break;
-                            else
-                                Console.Write("Try again: ");
-                        }
-                        if (statusMatrix[row, col] == 4) statusMatrix[row, col] = 0;
-                        else if (statusMatrix[row, col] == 0) statusMatrix[row, col] = 4;
+                        if (statusMatrix[openX, openY] == 4) statusMatrix[openX, openY] = 0;
+                        else if (statusMatrix[openX, openY] == 0) statusMatrix[openX, openY] = 4;
                         break;
                     }
                 }
@@ -193,9 +220,11 @@ namespace MineSweeper
             while (true)
             {
                 Console.Clear();
-                Console.WriteLine("\n\t\tHello, Welcome to MineSweeper 9x9!");
-                Console.WriteLine("\n\t1. New game");
-                Console.WriteLine("\n\t0. Exit");
+                Console.WriteLine("\n\t\t\t\t\tHello, Welcome to MineSweeper 9x9!");
+                Console.WriteLine("\n\t\t\t\t\t---------------OoO----------------");
+                Console.WriteLine("\n\n\t\t\t\t\t\t    1. New game");
+                Console.WriteLine("\n\t\t\t\t\t\t    0. Exit");
+                Console.Write("\n\t\t\t\t\t      Please choose the option:    ");
                 switch (option = importOption())
                 {
                     case '1':
