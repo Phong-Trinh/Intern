@@ -36,7 +36,7 @@ namespace MineSweeper
                 for(int j=0;  j<i;j++)
                 {
                         if ((boomX[i] == boomX[j]) && (boomY[i] == boomY[j])) break;
-                        else 
+                        else if(j == i-1)
                         {
                             mineMatrix[boomX[i], boomY[i]] = 9;
                             i++;
@@ -194,7 +194,7 @@ namespace MineSweeper
                         else
                         {
                             openBox(openX, openY, mineMatrix, statusMatrix, ref openedBox);
-                            if (openedBox == 71)
+                            if (openedBox == 71)    
                             {
                                 isOver = true;
                                 for (int i = 0; i < boomNum; i++) { statusMatrix[boomX[i], boomY[i]] = 2; mineMatrix[boomX[i], boomY[i]] = 9; }
