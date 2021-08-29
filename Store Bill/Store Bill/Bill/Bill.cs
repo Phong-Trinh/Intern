@@ -28,7 +28,7 @@ namespace Store_Bill
         }
         public void ToStringFile(string[] k, int line)
         {
-            k[line++] = ("Bil infornation: " + _billID + " " + _dateCreated + " " + _billPrice);
+            k[line++] = ("Bil infornation: id: " + _billID + ", date: " + _dateCreated + ", total: " + _billPrice);
             _customerInfor.ToStringFile(k, line++);
             k[line++] = ("List detail bills: ");
             foreach (DetailBill product in _detailBill)

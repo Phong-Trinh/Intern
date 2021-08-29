@@ -14,11 +14,8 @@ namespace Store_Bill
             Console.SetCursorPosition(30, 5 + Line++);
             Console.Write("Please enter how much capacity:  ");
             CatchInput.CatchInput(out _baterry, 63, 5+Line - 1);
+            _capacity = _baterry;
             return _baterry * 500;
-        }
-        public override int GetCapacity()
-        {
-            return _baterry;
         }
         public override string GetFanType()
         {

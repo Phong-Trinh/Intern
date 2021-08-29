@@ -9,7 +9,7 @@ namespace Store_Bill
     abstract class AirConditioner : IProductInfor
     {
         protected InputErrors CatchInput = new InputErrors();
-        protected int Line = 20;
+        protected int Line = 17;
         protected bool _inverter;
         protected string _airConditionerType;
         public abstract int GetPrice();

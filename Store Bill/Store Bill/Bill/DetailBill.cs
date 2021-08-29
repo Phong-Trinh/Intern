@@ -25,22 +25,13 @@ namespace Store_Bill
             Console.Write("-"+_productType + ": " + _productID + " "+_detailType+" " + _productName + " " + _whereMadeProduct);
             Console.SetCursorPosition(39, 5 + line++);
             if(_fanInfor != null)
-            Console.Write(" " + TotalPrice() + " " + _fanInfor.GetCapacity() + " " + _productNumber);
+            Console.Write(" " + TotalPrice() + " " + _fanInfor._capacity + " " + _productNumber);
             else if(_airConditionerInfor != null) Console.Write(" " + TotalPrice() + " " + _airConditionerInfor.GetAntiBacterial() + " "+ _airConditionerInfor.GetDeodorant()+" " + _productNumber);
         }
         public void GetInfor()
         {
             int line = 15;
             InputErrors catchInput = new InputErrors();
-            Console.SetCursorPosition(30, 5 + line++);
-            Console.Write("Please enter a product ID: ");
-            _productID = Console.ReadLine();
-            Console.SetCursorPosition(30, 5 + line++);
-            Console.Write("Please enter a product name: ");
-            _productName = Console.ReadLine();
-            Console.SetCursorPosition(30, 5 + line++);
-            Console.Write("Please enter where product made in: ");
-            _whereMadeProduct = Console.ReadLine();
             Console.SetCursorPosition(30, 5 + line+1);
             Console.Write("                     (1-Fan, 2-Air Conditoner) ");
             Console.SetCursorPosition(30, 5 + line++);
@@ -127,9 +118,19 @@ namespace Store_Bill
                     }
                     break;
             }
+            line += 3;
+            Console.SetCursorPosition(30, 5 + line++);
+            Console.Write("Please enter a product ID: ");
+            _productID = Console.ReadLine();
+            Console.SetCursorPosition(30, 5 + line++);
+            Console.Write("Please enter a product name: ");
+            _productName = Console.ReadLine();
+            Console.SetCursorPosition(30, 5 + line++);
+            Console.Write("Please enter where product made in: ");
+            _whereMadeProduct = Console.ReadLine();
             line = 23;
             Console.SetCursorPosition(30, 5 + line++);
-            Console.Write("Please enter numbers of product: ");
+            Console.Write("Please enter product quanity: ");
             catchInput.CatchInput(out _productNumber, 63, 5+ line - 1);
             Console.SetCursorPosition(30, 5 + line+1);
             Console.Write("            Product's price:  " + _productPrice * _productNumber);
@@ -141,10 +142,10 @@ namespace Store_Bill
 
         public void ToStringFile(string[] k, int line)
         {
-            k[line++]=("-" + _productType + ": " + _productID + " " + _detailType + " " + _productName + " " + _whereMadeProduct);
+            k[line++]=("-" + _productType + ": id " + _productID + ", type: " + _detailType + ", name: " + _productName + ", made in: " + _whereMadeProduct);
             if (_fanInfor != null)
-                k[line++]=(" " + TotalPrice() + " " + _fanInfor.GetCapacity() + " " + _productNumber);
-            else k[line++]=(" " + TotalPrice() + " " + _airConditionerInfor.GetAntiBacterial() + " " + _airConditionerInfor.GetDeodorant() + " " + _productNumber);
+                k[line++]=("price: " + TotalPrice() + ", capacity: " + _fanInfor._capacity + " quanity: " + _productNumber);
+            else k[line++]=("price: " + TotalPrice() + ", " + _airConditionerInfor.GetAntiBacterial() + ", " + _airConditionerInfor.GetDeodorant() + ", quanity: " + _productNumber);
         }
     }
 }

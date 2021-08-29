@@ -19,7 +19,7 @@ namespace Store_Bill
         }
         public void ToStringFile(string[] k, int line)
         {
-            k[line++] = ("Customer information: " + _customerID + " " + _customerName + " " + _customerPhoneNumbers + " " + _customerAdress);
+            k[line++] = ("Customer information: id: " + _customerID + ", name: " + _customerName + ", phone: " + _customerPhoneNumbers + ", adress: " + _customerAdress);
         }
         public void GetCustomerInfor()
         {

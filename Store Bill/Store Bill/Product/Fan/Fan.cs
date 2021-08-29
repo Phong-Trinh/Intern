@@ -9,14 +9,10 @@ namespace Store_Bill
     abstract class Fan : IProductInfor
     {
         protected InputErrors CatchInput = new InputErrors();
-        protected int Line = 20;
-        protected int _capacity;
+        protected int Line = 17;
+        public int _capacity { get; set; }
         public abstract int GetPrice();
         public abstract string GetFanType();
-        public virtual int GetCapacity()
-        {
-            return 0;
-        }
         public string GetProductType()
         {
              return "Fan";
