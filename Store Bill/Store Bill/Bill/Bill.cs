@@ -1,0 +1,79 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using System.Globalization;
+namespace Store_Bill
+{
+    class Bill : IOutFile
+    {
+        private string _billID;
+        private CustomerInfor _customerInfor =new CustomerInfor();
+        private List<DetailBill> _detailBill = new List<DetailBill>();
+        private DateTime _dateCreated;
+        private int _billPrice = 0;
+        public void PrintBill()
+        {
+            int line = 6;
+            Console.SetCursorPosition(28, 5 + line++);
+            Console.Write("Bil infornation: " + _billID + " "+ _dateCreated+" "+_billPrice);
+            _customerInfor.PrintInfor(ref line);
+            Console.SetCursorPosition(28, 5 + 1+line++);
+            Console.Write("List detail bills: ");
+            foreach (DetailBill product in _detailBill)
+            {
+                product.PrintDetailPrice(ref line);
+            }
+        }
+        public void ToStringFile(string[] k, int line)
+        {
+            k[line++] = ("Bil infornation: " + _billID + " " + _dateCreated + " " + _billPrice);
+            _customerInfor.ToStringFile(k, line++);
+            k[line++] = ("List detail bills: ");
+            foreach (DetailBill product in _detailBill)
+            {
+                product.ToStringFile(k, line++);
+            }
+        }
+        public void GetBillInfor()
+        {
+            InputErrors catchInput = new InputErrors();
+            int line = 5;
+            Console.SetCursorPosition(28, 5 + line++);
+            Console.Write("Enter bill ID: ");
+            _billID = Console.ReadLine();
+            Console.SetCursorPosition(28, 5 + line++);
+            Console.Write("Enter date(dd/mm/yyyy): ");
+            catchInput.CatchInput(out _dateCreated, 52, 5 + line - 1);
+            _customerInfor.GetCustomerInfor();
+            line += 6;
+            Console.SetCursorPosition(28, 5 + line++);
+            Console.Write("Enter detail bill numbers: ");
+            int billNumber;
+            catchInput.CatchInput(out billNumber, 55, 5 + line-1);
+            Menu menu = new Menu();
+            for(int i=0;i<billNumber;i++)
+            {
+                menu.ClearDisplay(line+2);
+                Console.SetCursorPosition(28, 5 + line);
+                Console.Write((i+1)+"||");
+                _detailBill.Add(new DetailBill());
+                _detailBill[i].GetInfor();
+                if(i < billNumber -1) Console.ReadKey();
+            }
+            BillPrice();
+            line = 26;
+            Console.SetCursorPosition(58, 5 + line++);
+            Console.Write("Total price:  " + _billPrice);
+            Console.ReadKey();
+        }
+        public void BillPrice()
+        {
+            foreach (DetailBill product in _detailBill)
+            {
+                _billPrice += product.TotalPrice();
+            }    
+        }
+    }
+}
