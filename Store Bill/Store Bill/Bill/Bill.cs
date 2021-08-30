@@ -13,18 +13,23 @@ namespace Store_Bill
         private List<DetailBill> _detailBill = new List<DetailBill>();
         private DateTime _dateCreated;
         private int _billPrice = 0;
-        public void PrintBill()
+        public void PrintBill(int deNum)
         {
             int line = 6;
             Console.SetCursorPosition(28, 5 + line++);
             Console.Write("Bil infornation: " + _billID + " "+ _dateCreated+" "+_billPrice);
             _customerInfor.PrintInfor(ref line);
             Console.SetCursorPosition(28, 5 + 1+line++);
-            Console.Write("List detail bills: ");
-            foreach (DetailBill product in _detailBill)
+            Console.Write("List detail bills:         up,down arrow to see more");
+            for(int i= deNum;i<= deNum+5;i++)
             {
-                product.PrintDetailPrice(ref line);
+                if(i < _detailBill.Count)
+                _detailBill[i].PrintDetailPrice(ref line);
             }
+        }
+        public int GetDetailBillNumbers()
+        {
+            return _detailBill.Count();
         }
         public void ToStringFile(string[] k, int line)
         {
@@ -43,7 +48,7 @@ namespace Store_Bill
             int line = 5;
             Console.SetCursorPosition(28, 5 + line++);
             Console.Write("Enter bill ID: ");
-            _billID = Console.ReadLine();
+            catchInput.CatchInput(out _billID, 42, 5 + line - 1);
             Console.SetCursorPosition(28, 5 + line++);
             Console.Write("Enter date(dd/mm/yyyy): ");
             catchInput.CatchInput(out _dateCreated, 52, 5 + line - 1);

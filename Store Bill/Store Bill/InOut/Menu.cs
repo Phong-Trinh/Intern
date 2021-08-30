@@ -15,7 +15,7 @@ namespace Store_Bill
             Console.SetCursorPosition(0, 1);
             Console.Write("\n\n\t\t\t+_+_+_+_+_+_+_+_+_+_+_+_+_+_+______+_+_+_+_+_+_+_+_+_+_+_+_+_+_+");
             int i=0;
-            while (i <= 34)
+            while (i<34)
             {
                 Console.SetCursorPosition(25, 4+i);
                 Console.Write("||");
@@ -55,9 +55,9 @@ namespace Store_Bill
                 Console.SetCursorPosition(25, 9 + line++);
                 Console.WriteLine("\t\t     2. Export N bills");
                 Console.SetCursorPosition(25, 11 + line++);
-                Console.WriteLine("\t\t    3. Export file");
+                Console.WriteLine("\t\t     3. Export file");
                 Console.SetCursorPosition(25, 13 + line++);
-                Console.WriteLine("\t\t    4. Exit");
+                Console.WriteLine("\t\t     4. Exit");
                 Console.SetCursorPosition(25, 16 + line++);
                 Console.Write("\t\t    Please enter the option: ");
                 action = Console.ReadKey();
@@ -89,6 +89,7 @@ namespace Store_Bill
                 else if (action.KeyChar == '2')
                 {
                     line = 0;
+                    int detailNum = 0;
                     ClearDisplay(0);
                     Console.SetCursorPosition(25, 5 + line++);
                     Console.WriteLine("\t\t       T-Smart Store Bill ");
@@ -114,7 +115,7 @@ namespace Store_Bill
                             ClearDisplay(6 + line - 4);
                             Console.SetCursorPosition(25, 6 + line);
                             Console.WriteLine("\t\t              " + (1 + i) + "/" + N);
-                            listBill[i].PrintBill();
+                            listBill[i].PrintBill(detailNum);
                             eventt = Console.ReadKey();
                             if (eventt.KeyChar == 'p') break;
                             else if (eventt.Key == ConsoleKey.LeftArrow)
@@ -128,6 +129,19 @@ namespace Store_Bill
                                 i++;
                                 Task.Delay(300).Wait();
                                 if (i == listBill.Count()) i = 0;
+                            }
+                            else if (eventt.Key == ConsoleKey.UpArrow)
+                            {
+                                detailNum -= 5;
+                                Task.Delay(300).Wait();
+                                if (detailNum < 0) detailNum =0;
+                            }
+                            else if (eventt.Key == ConsoleKey.DownArrow)
+                            {
+                                listBill[i].GetDetailBillNumbers();
+                                detailNum += 5;
+                                Task.Delay(300).Wait();
+                                if (detailNum > listBill[i].GetDetailBillNumbers() - 6) detailNum = 0;
                             }
                         }
                     }

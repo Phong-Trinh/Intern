@@ -13,7 +13,7 @@ namespace Store_Bill
         {
             while (true)
             {
-                if (int.TryParse(Console.ReadLine(), out k) == true)
+                if (int.TryParse(Console.ReadLine(), out k) == true && k >= 1)
                 {
                     return true;
                 }
@@ -63,6 +63,30 @@ namespace Store_Bill
                     Thread.Sleep(420);
                     Console.SetCursorPosition(row, col);
                     Console.Write("         ");
+                    Console.SetCursorPosition(row, col);
+                }
+            }
+        }
+        public bool CatchInput(out string k, int row, int col)
+        {
+            while (true)
+            {
+                k = Console.ReadLine();
+                int count = 0;
+                if (k.Length > 0)
+                    for (int i = 0; i < k.Length; i++)
+                        if (k[i] == ' ') count++;
+                if (count != k.Length && k != string.Empty)
+                {
+                    return true;
+                }
+                else
+                {
+                    Console.SetCursorPosition(row, col);
+                    Console.Write(" Error            ");
+                    Thread.Sleep(420);
+                    Console.SetCursorPosition(row, col);
+                    Console.Write("                  ");
                     Console.SetCursorPosition(row, col);
                 }
             }

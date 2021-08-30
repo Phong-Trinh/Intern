@@ -121,7 +121,7 @@ namespace Store_Bill
             line += 3;
             Console.SetCursorPosition(30, 5 + line++);
             Console.Write("Please enter a product ID: ");
-            _productID = Console.ReadLine();
+            catchInput.CatchInput(out _productID, 56, 5 + line - 1);
             Console.SetCursorPosition(30, 5 + line++);
             Console.Write("Please enter a product name: ");
             _productName = Console.ReadLine();
@@ -142,9 +142,9 @@ namespace Store_Bill
 
         public void ToStringFile(string[] k, int line)
         {
-            k[line++]=("-" + _productType + ": id " + _productID + ", type: " + _detailType + ", name: " + _productName + ", made in: " + _whereMadeProduct);
+            k[line++]=("-" + _productType + ": id: " + _productID + ", type: " + _detailType + ", name: " + _productName + ", made in: " + _whereMadeProduct);
             if (_fanInfor != null)
-                k[line++]=("price: " + TotalPrice() + ", capacity: " + _fanInfor._capacity + " quanity: " + _productNumber);
+                k[line++]=("price: " + TotalPrice() + ", capacity: " + _fanInfor._capacity + ", quanity: " + _productNumber);
             else if (_airConditionerInfor != null) k[line++]=("price: " + TotalPrice() + ", " + _airConditionerInfor.GetAntiBacterial() + ", " + _airConditionerInfor.GetDeodorant() + ", quanity: " + _productNumber);
         }
     }

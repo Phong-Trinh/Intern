@@ -23,10 +23,11 @@ namespace Store_Bill
         }
         public void GetCustomerInfor()
         {
+            InputErrors catchInput = new InputErrors();
             int line = 7;
             Console.SetCursorPosition(28, 5 + line++);
             Console.Write("Enter customer ID: ");
-            _customerID = Console.ReadLine();
+            catchInput.CatchInput(out _customerID, 46, 5 + line - 1);
             Console.SetCursorPosition(28, 5 + line++);
             Console.Write("Enter customer name: ");
             _customerName = Console.ReadLine();
