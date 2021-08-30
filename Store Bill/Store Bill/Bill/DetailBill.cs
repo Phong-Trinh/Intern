@@ -145,7 +145,7 @@ namespace Store_Bill
             k[line++]=("-" + _productType + ": id " + _productID + ", type: " + _detailType + ", name: " + _productName + ", made in: " + _whereMadeProduct);
             if (_fanInfor != null)
                 k[line++]=("price: " + TotalPrice() + ", capacity: " + _fanInfor._capacity + " quanity: " + _productNumber);
-            else k[line++]=("price: " + TotalPrice() + ", " + _airConditionerInfor.GetAntiBacterial() + ", " + _airConditionerInfor.GetDeodorant() + ", quanity: " + _productNumber);
+            else if (_airConditionerInfor != null) k[line++]=("price: " + TotalPrice() + ", " + _airConditionerInfor.GetAntiBacterial() + ", " + _airConditionerInfor.GetDeodorant() + ", quanity: " + _productNumber);
         }
     }
 }

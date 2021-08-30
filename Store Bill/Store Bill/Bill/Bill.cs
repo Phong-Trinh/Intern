@@ -34,6 +34,7 @@ namespace Store_Bill
             foreach (DetailBill product in _detailBill)
             {
                 product.ToStringFile(k, line++);
+                line++;
             }
         }
         public void GetBillInfor()
