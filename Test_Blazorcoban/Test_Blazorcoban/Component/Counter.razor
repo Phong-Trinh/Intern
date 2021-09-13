@@ -1,0 +1,21 @@
+﻿@page "/counter"
+    <link href="../Component/Counter.razor.css" rel="stylesheet" />
+    <div class="counter">
+        <h1 class="tear" style="background-color: @tick1;"> </h1>
+        <h1 class="tear" style="background-color: @tick2;"> </h1>
+        <h1 class="tear" style="background-color: @tick3;"> </h1>
+        <h1 class="tear" style="background-color: @tick4;"> </h1>
+        <h1 class="tear" style="background-color: @tick5;"> </h1>
+    </div>
+    @code {
+        [Parameter]
+        public string tick1 { get; set; }
+        [Parameter]
+        public string tick2 { get; set; }
+        [Parameter]
+        public string tick3 { get; set; }
+        [Parameter]
+        public string tick4 { get; set; }
+        [Parameter]
+        public string tick5 { get; set; }
+    }

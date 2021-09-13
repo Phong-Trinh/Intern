@@ -1,0 +1,111 @@
+﻿@page "/dongho"
+<link href="../Component/DongHo.razor.css" rel="stylesheet" />
+    <div class="Timer" style="background-color: @Color;" >
+        <h1>@Title</h1>
+        <p>@miCounter:@seCounter </p>
+        <button @onclick="StartTimer">@startButt</button>
+        <button @onclick="ResetTimer">Reset</button>
+    </div>
+    <Counter tick1="@tick1" tick2="@tick2" tick3="@tick3" tick4="@tick4" tick5="@tick5"></Counter>
+    @code {
+        private static System.Timers.Timer aTimer;
+        private int seCounter = 00;
+        [Parameter]
+        public int miKind { get; set; } = 25;
+        [Parameter]
+        public int miCounter { get; set; } = 25;
+        [Parameter]
+        public string Title { get; set; } = "Focus";
+        [Parameter]
+        public string Color { get; set; } = "rgb(249 143 143)";
+        private string startButt = "Start";
+        private string tick1 = "white";
+        private string tick2 = "white";
+        private string tick3 = "white";
+        private string tick4 = "white";
+        private string tick5 = "white";
+        private Counter _counter = new Counter();
+        protected override void OnInitialized()
+        {
+            base.OnInitialized();
+            {
+                miCounter = 25;
+                seCounter = 00;
+                aTimer = new System.Timers.Timer(1000);
+                aTimer.Elapsed += CountDownTimer;
+            }
+        }
+        public void UpdateCounter()
+        {
+            miCounter = miKind;
+        }
+        public void ChangeStartButton()
+        {
+            switch (startButt)
+            {
+                case "Start":
+                    {
+                        startButt = "Pause";
+                        break;
+                    }
+                case "Pause":
+                    {
+                        startButt = "Start";
+                        break;
+                    }
+            }
+        }
+        public void StartTimer()
+        {
+            if (startButt == "Start")
+            {
+                aTimer.Start();
+            }
+            else
+            {
+                aTimer.Stop();
+            }
+            ChangeStartButton();
+        }
+        public void ResetTimer()
+        {
+            seCounter = 00;
+            miCounter = miKind;
+            startButt = "Start";
+            tick1 = "white";
+            tick2 = "white";
+            tick3 = "white";
+            tick4 = "white";
+            tick5 = "white";
+            aTimer.Stop();
+            StateHasChanged();
+        }
+        public void CountDownTimer(Object source, System.Timers.ElapsedEventArgs e)
+        {
+            if (seCounter > 0)
+            {
+                seCounter -= 1;
+            }
+            else if (seCounter == 0 && miCounter > 0)
+            {
+                seCounter = 59;
+                miCounter -= 1;
+                if (miCounter == miKind - 1*miKind/5 -1)
+                    tick1 = "yellow";
+                if (miCounter == miKind - 2*miKind / 5 - 1)
+                    tick2 = "yellow";
+                if (miCounter == miKind - 3*miKind / 5 - 1)
+                    tick3 = "yellow";
+                if (miCounter == miKind - 4*miKind / 5 - 1)
+                    tick4 = "yellow";
+            }
+            else
+            {
+                aTimer.Stop();
+                tick5 = "yellow";
+                Title = "Done";
+            }
+            InvokeAsync(StateHasChanged);
+        }
+
+    }

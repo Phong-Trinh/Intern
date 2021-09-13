@@ -1,46 +1,55 @@
-﻿@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
-
+﻿
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    margin: 0px;
 }
-
-a, .btn-link {
-    color: #0366d6;
+.header {
+    background-color: rgb(231 59 59);
+    padding: 14px;
+    margin: 0px;
+    position: relative;
+    display: flex;
+    justify-content:space-between;
 }
-
-.btn-primary {
-    color: #fff;
-    background-color: #1b6ec2;
-    border-color: #1861ac;
+    .logo {
+    color: rgb(252 167 167);
+    text-decoration: none;
+    position: relative;
+    font-size: 44px;
+    margin-top: 11px;
+    margin-left: 13px;
+    font: bolder, icon;
+    bottom: 4px;
 }
-
-.content {
-    padding-top: 1.1rem;
+    .logo span{
+        color: white;
+    }
+.header ul {
+    display: inline-block;
 }
-
-.valid.modified:not([type=checkbox]) {
-    outline: 1px solid #26b050;
+.header li {
+    padding-bottom: 4px;
+    padding-right: 13px;
+    color: black;
+    display: inline;
+    bottom: 0px;
 }
-
-.invalid {
-    outline: 1px solid red;
-}
-
-.validation-message {
-    color: red;
-}
-
-#blazor-error-ui {
-    background: lightyellow;
-    bottom: 0;
-    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
-    display: none;
-    left: 0;
-    padding: 0.6rem 1.25rem 0.7rem 1.25rem;
-    position: fixed;
-    width: 100%;
-    z-index: 1000;
-}
+.header li a {
+        text-decoration: none;
+        font: bolder;
+        color: rgb(247 237 3);
+    }
+    #blazor-error-ui {
+        background: lightyellow;
+        bottom: 0;
+        box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
+        display: none;
+        left: 0;
+        padding: 0.6rem 1.25rem 0.7rem 1.25rem;
+        position: fixed;
+        width: 100%;
+        z-index: 1000;
+    }
 
     #blazor-error-ui .dismiss {
         cursor: pointer;

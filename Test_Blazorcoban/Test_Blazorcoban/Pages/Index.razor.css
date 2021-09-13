@@ -1,0 +1,12 @@
+﻿.kind-count {
+    position: relative;
+    width: 79px;
+    text-align: center;
+    height: 34px;
+    border-radius: 19px;
+    display: flex;
+    flex-direction: column;
+    font: bold;
+    margin: 50px 50px 50px 50px;
+    left: 200px;
+}

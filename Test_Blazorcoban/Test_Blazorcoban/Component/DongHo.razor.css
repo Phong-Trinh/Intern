@@ -1,0 +1,18 @@
+﻿.Timer{
+    width: 250px;
+    height: 250px;
+    position: absolute;
+    font: bolder, icon;
+    justify-content:center;
+    text-align: center;
+    left: 42%;
+    margin-top:32px;
+    font-size:x-large;
+    border-radius: 50%;
+}
+.Timer button{
+    font: bold;
+    border-radius: 8px;
+    background-color: rgb(152 136 136);
+    color: black;
+}
