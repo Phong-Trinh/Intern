@@ -1,0 +1,72 @@
+﻿*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    font-family: 'Poppins', 'sans-serif';
+}
+.container{
+    margin: 160px auto;
+    max-width: 366px;
+    max-height: 700px;
+    height: 100%;
+    width: 100%;
+    background: pink;
+    border: 4px;
+    padding: 30px;
+    border-radius: 10px;
+}
+.container .inputField{
+    display: flex;
+    height: 32px;
+    width: 100%;
+    margin-top: 16px;
+    margin-bottom: 20px;
+}
+.inputField input
+{
+    width: 64%;
+    border: 1px;
+    border-radius: 5px;
+    padding-left: 13px;
+}
+.inputField button{
+    width: 40px;
+    height: 35px
+    border: none;
+    font-weight: 300;
+    cursor: pointer;
+    border-radius: 6px;
+}
+.container .todo-list{
+    max-height: 250px;
+    overflow-y: auto;
+}
+.todo-list li{
+    list-style: none;
+    height: 38px;
+    margin-bottom: 7px;
+    position: relative;
+}
+.todo-list span{
+    width: 52px;
+    background-color: white;
+    color: red;
+    position: absolute;
+    right: 4px;
+    cursor: pointer;
+    text-align: center;
+}
+.container .footer{
+    display: flex;
+    widt: 98%;
+    justify-content: space-between;
+    margin-top: 13px;
+}
+.footer button{
+    height: 18px
+    border: none;
+    font-weight: 300;
+    cursor: pointer;
+    border-radius: 3px;
+    padding: 3px 7px;
+}

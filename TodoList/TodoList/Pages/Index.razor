@@ -1,7 +1,66 @@
-﻿@page "/"
+﻿@page "/" 
+@using TodoList.Data
+<div class="container">
+    <h1> Todo List</h1>
+    <div class="inputField">   
+        <input type="text" placeholder="Thing need to do..." @bind="_thingName"/>
+        <button @onclick="AddToList"> Add </button>
+    </div>
+    <ul class="todo-list">
+        @foreach (var item in _listThing)
+        {
+            <li><input type="checkbox" @onclick="() => UpdateItem(item)" @bind="item.IsDone"/> @item.Thing <span @onclick="() => DeleteItem(item)"> Delete</span></li>
+        }
+    </ul>  
+    <div class="footer">
+        <span>You have @_listThing.Count(ThingTodo=>ThingTodo.IsDone==false) things left</span>
+        <button @onclick="() => _listThing.Clear()">Clear all</button>
+    </div>
+</div>
 
-<h1>Hello, world!</h1>
-
-Welcome to your new app.
-
-<SurveyPrompt Title="How is Blazor working for you?" />
+@code {
+    @using System;
+    private IList<ThingTodo> _listThing = new List<ThingTodo>();
+    private string _thingName;
+    protected override async Task OnInitializedAsync()
+    {
+        string json = System.IO.File.ReadAllText("wwwroot/ThingTodo.json");
+        _listThing = System.Text.Json.JsonSerializer.Deserialize<List<ThingTodo>>(json);
+    }
+    public void AddToList()
+    {
+        if (!(string.IsNullOrEmpty(_thingName)))
+        {
+            _listThing.Add(new ThingTodo() { IsDone = false, Thing = _thingName });
+            _thingName = string.Empty;
+            string json = System.Text.Json.JsonSerializer.Serialize(_listThing);
+            System.IO.File.WriteAllText("wwwroot/ThingTodo.json", json);
+        }
+    }
+    public void AddToList(string _thingName)
+    {
+        if (!(string.IsNullOrEmpty(_thingName)))
+        {
+            _listThing.Add(new ThingTodo() { IsDone = false, Thing = _thingName });
+            _thingName = string.Empty;
+            string json = System.Text.Json.JsonSerializer.Serialize(_listThing);    //chuyen list thanh chuoi json
+            System.IO.File.WriteAllText("wwwroot/ThingTodo.json", json);            // doc chuoi vao file json
+        }
+    }
+    public void UpdateItem(ThingTodo k)
+    {
+        if (k.IsDone == true) k.IsDone = false;
+        else k.IsDone = true;
+        UpdateJSON();
+    }
+    public void DeleteItem(ThingTodo k)
+    {
+        _listThing.Remove(k);
+        UpdateJSON();
+    }
+    public void UpdateJSON()
+    {
+        string json = System.Text.Json.JsonSerializer.Serialize(_listThing);
+        System.IO.File.WriteAllText("wwwroot/ThingTodo.json", json);
+    }
+    }
