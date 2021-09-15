@@ -1,4 +1,4 @@
-﻿@page "/dongho"
+﻿@page "/Clock"
 <link href="../Component/DongHo.razor.css" rel="stylesheet" />
     <div class="Timer" style="background-color: @Color;" >
         <div class="container">
@@ -8,25 +8,21 @@
             <button @onclick="ResetTimer">Reset</button>
         </div>
     </div> 
-    <Counter tick1="@tick1" tick2="@tick2" tick3="@tick3" tick4="@tick4" tick5="@tick5"></Counter>
+    <Counter ListTick="tick"></Counter>
     @code {
         private static System.Timers.Timer aTimer;
-        private int seCounter = 00;  
-        [Parameter] 
-        public int miKind { get; set; } = 25; 
-        [Parameter] 
+        private int seCounter = 00;
+        [Parameter]
+        public int miKind { get; set; } = 25;
+        [Parameter]
         public int miCounter { get; set; } = 25;
         [Parameter]
         public string Title { get; set; } = "Focus";
         [Parameter]
         public string Color { get; set; } = "rgb(249 143 143)";
         private string startButt = "Start";
-        private string tick1 = "white";
-        private string tick2 = "white";
-        private string tick3 = "white";
-        private string tick4 = "white"; 
-        private string tick5 = "white";
-        private Counter _counter = new Counter(); 
+        private string[] tick = new string[5] { "white", "white", "white", "white", "white" };
+        private Counter _counter = new Counter();
         protected override void OnInitialized()
         {
             base.OnInitialized();
@@ -69,16 +65,19 @@
             }
             ChangeStartButton();
         }
+        public void ResetTick()
+        {
+            for(int i=0;i<5;i++)
+            {
+                tick[i] = "white";
+            }
+        }
         public void ResetTimer()
         {
             seCounter = 00;
             miCounter = miKind;
             startButt = "Start";
-            tick1 = "white";
-            tick2 = "white";
-            tick3 = "white";
-            tick4 = "white";
-            tick5 = "white";
+            ResetTick();
             aTimer.Stop();
             StateHasChanged();
         }
@@ -92,19 +91,19 @@
             {
                 seCounter = 59;
                 miCounter -= 1;
-                if (miCounter == miKind - 1*miKind/5 -1)
-                    tick1 = "yellow";
-                if (miCounter == miKind - 2*miKind / 5 - 1)
-                    tick2 = "yellow";
-                if (miCounter == miKind - 3*miKind / 5 - 1)
-                    tick3 = "yellow";
-                if (miCounter == miKind - 4*miKind / 5 - 1)
-                    tick4 = "yellow";
+                if (miCounter == miKind - 1 * miKind / 5 - 1)
+                    tick[0] = "yellow";
+                if (miCounter == miKind - 2 * miKind / 5 - 1)
+                    tick[1] = "yellow";
+                if (miCounter == miKind - 3 * miKind / 5 - 1)
+                    tick[2] = "yellow";
+                if (miCounter == miKind - 4 * miKind / 5 - 1)
+                    tick[3] = "yellow";
             }
             else
             {
                 aTimer.Stop();
-                tick5 = "yellow";
+                tick[4] = "yellow";
                 Title = "Done";
             }
             InvokeAsync(StateHasChanged);
