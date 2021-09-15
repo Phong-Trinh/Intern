@@ -1,12 +1,19 @@
 ﻿.kind-count {
-    position: relative;
+    position: absolute;
+    display: block;
     width: 79px;
     text-align: center;
     height: 34px;
     border-radius: 19px;
-    display: flex;
-    flex-direction: column;
     font: bold;
     margin: 50px 50px 50px 50px;
-    left: 200px;
+    top: 30%;
+    left: 22%;
+}
+.break-count{
+    left: 68%;
+}
+.container {
+    position: relative;
+    text-align: center;
 }

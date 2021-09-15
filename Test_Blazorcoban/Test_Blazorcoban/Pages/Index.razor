@@ -1,20 +1,22 @@
 ﻿@page "/"
 <Head>
 </Head>
-<DongHo miCounter="@_time" Title="@_title" Color="@_color" @ref="_counterKind"></DongHo>
-<button style="background-color: rgb(249 143 143);" class="kind-count" @onclick="ChangeTimeWork">Work Time</button>
-<button style="background-color: palegreen;" class="break-count kind-count" @onclick="ChangeTimeBreak">Short Break</button>
+<div class="container">   
+    <DongHo miCounter="@_time" Title="@_title" Color="@_color" @ref="_counterKind"></DongHo>
+    <button style="background-color: rgb(249 143 143);" class="kind-count" @onclick="ChangeTimeWork">Work Time</button>
+    <button style="background-color: palegreen;" class="break-count kind-count" @onclick="ChangeTimeBreak">Short Break</button>
+</div>
 @code{
-    private DongHo _counterKind;
-    private int _time = 25;      
-    private string _title = "Focus";
+    private DongHo _counterKind;  
+    private int _time = 25; 
+    private string _title = "Focus"; 
     private string _color = "rgb(249 143 143)";
     public void ChangeTimeWork()
-    {
+    { 
         this._time = 25;
-        _counterKind.miKind = 25;
+        _counterKind.miKind = 25; 
         _title = "Focus";
-        _color = "rgb(249 143 143)";
+        _color = "rgb(249 143 143)"; 
         _counterKind.ResetTimer();
     }
     async Task ChangeTimeBreak()

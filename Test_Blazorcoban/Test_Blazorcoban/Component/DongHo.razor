@@ -1,18 +1,20 @@
 ﻿@page "/dongho"
 <link href="../Component/DongHo.razor.css" rel="stylesheet" />
     <div class="Timer" style="background-color: @Color;" >
-        <h1>@Title</h1>
-        <p>@miCounter:@seCounter </p>
-        <button @onclick="StartTimer">@startButt</button>
-        <button @onclick="ResetTimer">Reset</button>
-    </div>
+        <div class="container">
+            <h1>@Title</h1>
+            <p>@miCounter:@seCounter </p>  
+            <button @onclick="StartTimer">@startButt</button> 
+            <button @onclick="ResetTimer">Reset</button>
+        </div>
+    </div> 
     <Counter tick1="@tick1" tick2="@tick2" tick3="@tick3" tick4="@tick4" tick5="@tick5"></Counter>
     @code {
         private static System.Timers.Timer aTimer;
-        private int seCounter = 00;
-        [Parameter]
-        public int miKind { get; set; } = 25;
-        [Parameter]
+        private int seCounter = 00;  
+        [Parameter] 
+        public int miKind { get; set; } = 25; 
+        [Parameter] 
         public int miCounter { get; set; } = 25;
         [Parameter]
         public string Title { get; set; } = "Focus";
@@ -22,9 +24,9 @@
         private string tick1 = "white";
         private string tick2 = "white";
         private string tick3 = "white";
-        private string tick4 = "white";
+        private string tick4 = "white"; 
         private string tick5 = "white";
-        private Counter _counter = new Counter();
+        private Counter _counter = new Counter(); 
         protected override void OnInitialized()
         {
             base.OnInitialized();

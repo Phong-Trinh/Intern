@@ -7,13 +7,12 @@
     transform: rotate(45deg);
     margin-top: 20px;
     margin-right: 34px;
+    display: inline-block; 
 }
 
-.counter{
+.counter {
     position: absolute;
-    display: flex;
-    flex-direction: row;
-    left: 36%;
-    bottom: 15%;
-    margin-top:14px;
+    text-align: center;
+    left: 35.6%;
+    margin-top: 14px;
 }

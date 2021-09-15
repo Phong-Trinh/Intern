@@ -1,7 +1,7 @@
 ﻿.Timer{
-    width: 250px;
-    height: 250px;
-    position: absolute;
+    width: 260px;
+    height: 260px;
+    position: relative;
     font: bolder, icon;
     justify-content:center;
     text-align: center;
@@ -9,6 +9,10 @@
     margin-top:32px;
     font-size:x-large;
     border-radius: 50%;
+}
+.Timer .container{
+    position: absolute;
+    left: 61px;
 }
 .Timer button{
     font: bold;
