@@ -24,6 +24,7 @@
     private string _thingName;
     protected override async Task OnInitializedAsync()
     {
+        // doc File JSON khi khoi chay ct
         string json = System.IO.File.ReadAllText("wwwroot/ThingTodo.json");
         _listThing = System.Text.Json.JsonSerializer.Deserialize<List<ThingTodo>>(json);
     }
@@ -33,8 +34,7 @@
         {
             _listThing.Add(new ThingTodo() { IsDone = false, Thing = _thingName });
             _thingName = string.Empty;
-            string json = System.Text.Json.JsonSerializer.Serialize(_listThing);
-            System.IO.File.WriteAllText("wwwroot/ThingTodo.json", json);
+            UpdateJSON();
         }
     }
     public void AddToList(string _thingName)
@@ -43,8 +43,7 @@
         {
             _listThing.Add(new ThingTodo() { IsDone = false, Thing = _thingName });
             _thingName = string.Empty;
-            string json = System.Text.Json.JsonSerializer.Serialize(_listThing);    //chuyen list thanh chuoi json
-            System.IO.File.WriteAllText("wwwroot/ThingTodo.json", json);            // doc chuoi vao file json
+            UpdateJSON();
         }
     }
     public void UpdateItem(ThingTodo k)
@@ -60,6 +59,7 @@
     }
     public void UpdateJSON()
     {
+        // chuyen list thanh chuoi JSON va luu vao file JSON
         string json = System.Text.Json.JsonSerializer.Serialize(_listThing);
         System.IO.File.WriteAllText("wwwroot/ThingTodo.json", json);
     }
